@@ -172,7 +172,7 @@ public class Main
 				while(doneRemoving == false)
 				{	
 					System.out.println(scheduler.getSemesterStr());
-					int choice = (int) getNumber("Enter the number of the class you want ot remove or -1 to go back", -1, Integer.MAX_VALUE);
+					int choice = (int) getNumber("Enter the number of the class you want ot remove or -1 to go back: ", -1, Integer.MAX_VALUE);
 					if(choice == -1)return;
 					int vertex = scheduler.getVertexFromRemoveList(choice);
 					if(vertex == Scheduler.INVALID_INDEX) 
@@ -182,10 +182,10 @@ public class Main
 					else 
 					{
 						ArrayList<Integer> removedClases = scheduler.removeClass(vertex);
-						System.out.println("These are the clases that were removed from the schedule");
+						System.out.println("These are the clases that were removed from the schedule:");
 						for(int i = 0; i < removedClases.size(); i++) 
 						{
-							System.out.println(scheduler.getCourseList().get(removedClases.get(i)));
+							System.out.println("\t" + scheduler.getCourseList().get(removedClases.get(i)));
 						}
 						doneRemoving = true;
 					}

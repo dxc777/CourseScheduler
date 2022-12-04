@@ -70,8 +70,7 @@ public class Course implements Comparable<Course>
 	
 	public String toString() 
 	{
-		return courseName + " - " + units + 
-				(semesterTaken != NOT_TAKEN ? " Completed during semester " + semesterTaken : " Not completed");
+		return courseName + " - " + units + " units";
 	}
 
 
