@@ -238,11 +238,13 @@ public class Scheduler
 			Course course = sortedCourseList.get(i);
 			if(currSemester != course.getSemesterTaken()) 
 			{
-				s.append("----Semester #----");
+				s.append("----Semester #");
 				s.append(course.getSemesterTaken() + 1);
+				s.append("----");
 				s.append('\n');
 				currSemester = course.getSemesterTaken();
 			}
+			s.append('\t');
 			s.append(course.getCourseName());
 			s.append('-');
 			s.append(course.getUnit());
@@ -258,7 +260,7 @@ public class Scheduler
 		Collections.sort(sortedCourseList);
 		StringBuilder s = new StringBuilder();
 		int i = 0; 
-		s.append("========The schedule that has been planned for semester #" + (i + 1) +"========\n");
+		s.append("========The schedule that has been planned for semester #" + (semester) +"========\n");
 		while(i < sortedCourseList.size() 
 				&& sortedCourseList.get(i).getSemesterTaken() != semester) 
 		{
