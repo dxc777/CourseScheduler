@@ -103,6 +103,8 @@ public class Scheduler
 			if(courseList.get(curr.adjVertex).getSemesterTaken() != Course.NOT_TAKEN) 
 			{
 				toBeRemoved.add(curr.adjVertex);
+				courseList.get(curr.adjVertex).setSemesterAvailable(Course.NOT_AVAILABLE);
+				courseList.get(curr.adjVertex).setSemesterTaken(Course.NOT_TAKEN);
 			}
 			curr = curr.next;
 		}
@@ -111,8 +113,6 @@ public class Scheduler
 		{
 			int v = toBeRemoved.poll();
 			inDegreeCount[v]++;
-			courseList.get(v).setSemesterAvailable(Course.NOT_AVAILABLE);
-			courseList.get(v).setSemesterTaken(Course.NOT_TAKEN);
 			classesTaken--;
 			
 			curr = requiredByXGraph.getHeadOfVertex(v).next;
@@ -121,6 +121,8 @@ public class Scheduler
 				if(courseList.get(curr.adjVertex).getSemesterTaken() != Course.NOT_TAKEN) 
 				{
 					toBeRemoved.add(curr.adjVertex);
+					courseList.get(curr.adjVertex).setSemesterAvailable(Course.NOT_AVAILABLE);
+					courseList.get(curr.adjVertex).setSemesterTaken(Course.NOT_TAKEN);
 				}
 				curr = curr.next;
 			}
