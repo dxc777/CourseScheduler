@@ -1,0 +1,30 @@
+m13, Into to discrete math,3
+c10, Programming concepts,3
+c12, Intro to programming,3
+c13, Learn syntax of Jambugle,3
+m21, Calculus I,5,m12,m13
+c20, Practice programming,5,c10,c12
+c25, Programming professionally,3,c10,c12
+m33, Calculus II,5,m21
+c33, Data structures,5,m21
+c34, Algorithms with data structures,5,c20
+c35, Computer software,3,c20,c25
+m44, Probability and statistics,3,c33,c34
+c41, Algorithm design,3,c34,c35
+c42, Algorithm probability,3,c35
+m55, Finite automata,5,m44
+m56, Finite state machines that have bowel movements,3,c41
+c54, Implementing finite state machines,3,c42
+c55, Taking shower properly,5,c41
+c56, Programming concepts revisited,5,c42
+m66, Mathematical proofs,3,m55,m56
+c66, Mathematical problems implementd with algorithms,5,c54
+c67, Don't do anything bad with the bad education we are giving you,3,c55
+m77, I want to see you try and do something with this math,3,m66,c66
+c78, Probability and statistics for babies,5,c67
+m88, How to deal with you emotions,5,m89
+m89, Mathematical models for desiging urinals,5,m77,c78
+c81, Implemening a bathroom simulator,3,c56
+c99, Senior design,3,m88,m89
+m99, Senior design but with math,2,c81
+m12, Intro To Math,5

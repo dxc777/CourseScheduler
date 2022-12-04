@@ -1,0 +1,5 @@
+A,first class,3
+B,second class,3,A
+C,third class,3,B
+D, firth class,3,C
+E, fourth class,3,C
