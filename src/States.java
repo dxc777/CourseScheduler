@@ -12,7 +12,8 @@ public enum States
 	NAN(7,"The units field cannot be parsed"),
 	REUSED_IDENTIFIER(8,"Class identifiers cannot be reused"),
 	FILE_NOT_FOUND(9,"The entered file cannot be found"),
-	INVALID_INDEX(10,"The list number entered is not valid enter again");
+	INVALID_INDEX(10,"The list number entered is not valid enter again"),
+	UNDECLARED_IDENTIFIER(11,"This identifier has not been declared and is being used");
 	
 	private final int STATE_CODE;
 	

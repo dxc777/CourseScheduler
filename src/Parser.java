@@ -84,7 +84,7 @@ public class Parser
 			
 			courseList.add(new Course(courseName,courseUnits));
 			Integer returnValue = idToVertex.put(courseIdentifier,courseList.size() - 1);
-			if(returnValue != null) 
+			if(returnValue != null)  
 			{
 				throw new IllegalArgumentException("Course Identifiers cannot be reused:\n"
 						+ line + "\nIdentifier that was reused: " + courseIdentifier);
@@ -113,7 +113,14 @@ public class Parser
 			LinkedList<String> prereqs = unprocessedEdges.removeFirst();
 			while(prereqs.isEmpty() == false) 
 			{
-				int adjVertex = idToVertex.get(prereqs.removeFirst());
+				String className = prereqs.removeFirst();
+				Integer vertex = idToVertex.get(className);
+				if(vertex == null) 
+				{
+					System.out.println(States.UNDECLARED_IDENTIFIER.getMessage() + ": " + className);
+					System.exit(0);
+				}
+				int adjVertex = vertex;
 				requiredByXGraph.addEdge(adjVertex, i, DEFAULT_EDGE_WEIGHT);
 				inDegreeCount[i]++;
 			}
