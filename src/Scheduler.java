@@ -3,7 +3,20 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 
-
+/**
+ * The scheduler class is meant to help a student plan the courses they want to take by maintaining 
+ * a graph of the classes that have been taken and providing them with information regarding what classes 
+ * they can take at the moment. 
+ * 
+ * 
+ * 
+ * TODO: Add documentation to functions that make it easier to understand the implementation
+ * TODO: Add handling of concurrent classes
+ * TODO: Add support for classes all under 1 topic where user pick x amount of classses from topic
+ * TODO: Add support for classes that are only available during certain terms i.e fall or sping
+ * @author J
+ *
+ */
 public class Scheduler
 {
 	private ArrayList<Course> courseList;

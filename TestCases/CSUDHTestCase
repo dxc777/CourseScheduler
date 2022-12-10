@@ -1,0 +1,46 @@
+PSY110, Critical thinking in everyday life,3
+PHY130, General Physics 1, 5
+ENG110, Freshman composition, 3
+THE120, Fundamentals of speech, 3
+ANT101, Intro to biological anthropology, 3
+MAT131,Elementary stat and probability,3 
+MUS101, Intoducing music, 3
+PHI 101, Values and society, 3
+CHS 125, Chicano latino music culture, 3
+PSY101, Genstd understanding human behavior, 3
+His 120, World history 1, 3
+ANT 100, Intro to Cultural Anthropology, 3.00
+FIN 200,Personal FIN for Non-Majors,3.00
+APP 325, Asian Pacific Art Music & Lit, 3.00
+CSC 301, Computers And Society,3.00
+ANT 371, Hist & Cul Pers Disability Stu,3.00
+HIS 101,History Of United States,3.00
+ENG 350, Advanced compotision , 3,ENG110
+CSC 121, Intro To Csc And Prog I,4.00
+CSC 123,Intro To Csc And Prog II,4.00, CSC121
+CSC300, Software Development, 4,CSC123
+MAT193, Calculus II,5,MAT191
+CSC  221, Assembly Language and Introduction to Computer Organization,3,CSC121	
+MAT  191 , Calculus I, 5
+MAT  281 , Discrete Mathematics,3,CSC121
+PHY  132 , General Physics II,5,MAT193
+	
+CSC  251 , C Language Programming and Unix,3,CSC121
+CSC  311 , Data Structures,3,CSC 123 ,MAT 281
+CSC  331 , Computer Organization, 3, CSC 221 , MAT 281
+	
+CSC  321 , Programming Languages, 3, CSC123
+	
+CSC  341 , Operating Systems,3,CSC 311, CSC 331, MAT 321
+	
+CSC  401 , Analysis Of Algorithms,3 ,CSC 311
+MAT  321 , Probability and Statistics,3,MAT 193 ,MAT 271 
+CSC  481 ,Software Engineering,3, CSC 301, CSC 311 , CSC 321
+CSC  492 , Senior Design,3,CSC 301, CSC 321, CSC 481
+	
+MAT  361 , Finite Automata,3, MAT 281
+	
+CSC  451 , Computer Networks,3,CSC 311 , MAT 281
+	
+CSC  453 , Data Management,3,CSC 311
+

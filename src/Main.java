@@ -27,7 +27,7 @@ public class Main
 			float maxUnits = getNumber("Enter the max units you wish to take per semester: ", 1, Integer.MAX_VALUE);
 			scheduler.setMaxUnits((int)maxUnits);
 			
-			while(scheduler.donePlanning() == false || true) 
+			while(scheduler.donePlanning() == false) 
 			{
 				for(int i = 0; i < actions.size(); i++) 
 				{
