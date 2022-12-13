@@ -1,0 +1,10 @@
+A, English I,3
+B, Algebra I, 3
+C, Algebra II,3,B
+D, English II,3,A
+E,World History I,3
+F, World History II,3, E
+G, U.S History,3, F
+H, Geometry,3,C
+CSC1, Intro to computer science,3, C,D,H
+Lo, Love and affection 1,3

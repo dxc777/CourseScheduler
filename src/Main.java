@@ -43,6 +43,7 @@ public class Main
 				actions.get(listIndex).doAction();
 				
 			}
+			System.out.println(scheduler.getScheduleStr());
 			
 		}
 	}

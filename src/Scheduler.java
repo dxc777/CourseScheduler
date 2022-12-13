@@ -9,11 +9,13 @@ import java.util.Queue;
  * they can take at the moment. 
  * 
  * 
- * 
+ * TODO: clean up the user interface
  * TODO: Add documentation to functions that make it easier to understand the implementation
  * TODO: Add handling of concurrent classes
  * TODO: Add support for classes all under 1 topic where user pick x amount of classses from topic
  * TODO: Add support for classes that are only available during certain terms i.e fall or sping
+ * TODO: Add tags that can be used to differentiate between general education or major class
+ * TODO: Add ability to change max units while planning
  * @author J
  *
  */
