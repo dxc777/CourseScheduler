@@ -27,6 +27,8 @@ public class Scheduler
 	
 	private AdjList requiredByXGraph;
 	
+	private States currentState;
+	
 	private int[] inDegreeCount;
 	
 	private int classesTaken;
@@ -62,7 +64,7 @@ public class Scheduler
 	}
 	
 	
-	public States addClass(int vertex) 
+	public boolean addClass(int vertex) 
 	{
 		int semesterUnits = getSemesterUnits();
 		if(semesterUnits > maxUnits) 
@@ -71,11 +73,13 @@ public class Scheduler
 		}
 		else if(semesterUnits + courseList.get(vertex).getUnit() > maxUnits) 
 		{
-			return States.CLASS_EXCEEDS_MAX_UNITS;
+			this.currentState = States.CLASS_EXCEEDS_MAX_UNITS;
+			return false;
 		}
 		else if(getSemesterUnits() == maxUnits) 
 		{
-			return States.MAX_UNITS_REACHED;
+			this.currentState = States.MAX_UNITS_REACHED;
+			return false;
 		}
 		
 		courseList.get(vertex).setSemesterTaken(semester);
@@ -94,12 +98,13 @@ public class Scheduler
 		
 		if(semesterUnits + courseList.get(vertex).getUnit() == maxUnits) 
 		{
-			return States.AT_UNIT_MAX;
+			this.currentState = States.AT_UNIT_MAX;
 		}
 		else 
 		{
-			return States.CLASS_ADDED;
+			this.currentState = States.CLASS_ADDED;
 		}
+		return true;
 	}
 	
 	public ArrayList<Integer> removeClass(int vertex)
@@ -157,6 +162,7 @@ public class Scheduler
 	{
 		if(index < 0) 
 		{
+			this.currentState = States.INVALID_INDEX;
 			return INVALID_INDEX;
 		}
 		int vertex = 0;
@@ -175,6 +181,7 @@ public class Scheduler
 		}
 		if(index > 0 && vertex >= courseList.size()) 
 		{
+			this.currentState = States.INVALID_INDEX;
 			return INVALID_INDEX;
 		}
 		return vertex;
@@ -184,6 +191,7 @@ public class Scheduler
 	{
 		if(listIndex < 0) 
 		{
+			this.currentState = States.INVALID_INDEX;
 			return INVALID_INDEX;
 		}
 		int i = 0; 
@@ -201,6 +209,7 @@ public class Scheduler
 		}
 		if(i >= sortedCourseList.size() || listIndex != 0) 
 		{
+			this.currentState = States.INVALID_INDEX;
 			return INVALID_INDEX;
 		}
 		return i;
@@ -313,19 +322,26 @@ public class Scheduler
 	}
 	
 	
-	public States changeSemester(int semester) 
+	public boolean changeSemester(int semester) 
 	{
 		if(semester < 0) 
 		{
-			return States.NEGATIVE_SEMESTER;
+			this.currentState = States.NEGATIVE_SEMESTER;
+			return false;
 		}
 		this.semester = semester;
-		return States.SEMESTER_CHANGED;
+		 this.currentState = States.SEMESTER_CHANGED;
+		 return true;
 	}
 		
 	public boolean donePlanning() 
 	{
 		return classesTaken == courseList.size();
+	}
+	
+	public States getState() 
+	{
+		return currentState;
 	}
 	
 	public int currSemester() 

@@ -154,7 +154,8 @@ public class Main
 					}
 					else 
 					{
-						States returnState = scheduler.addClass(vertex);
+						scheduler.addClass(vertex);
+						States returnState = scheduler.getState();
 						System.out.println(returnState.getMessage());
 						if(returnState == States.CLASS_ADDED || returnState == States.AT_UNIT_MAX) 
 						{
@@ -233,6 +234,7 @@ public class Main
 		
 		
 	}
+	
 	
 }	
 
