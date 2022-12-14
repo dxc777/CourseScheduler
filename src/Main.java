@@ -144,7 +144,16 @@ public class Main
 				boolean classPicked = false;
 				while(classPicked == false) 
 				{
-					System.out.println(scheduler.getAvailableClasses());
+					String availableClasses = scheduler.getAvailableClasses();
+					if(scheduler.getState() == States.NO_AVAILABLE_CLASSES) 
+					{
+						printState(scheduler.getState());
+						return;
+					}
+					else 
+					{
+						System.out.println(availableClasses);
+					}
 					int choice = (int)getNumber("Enter the number of the class you want to add or -1 to go back: ", -1,Integer.MAX_VALUE);
 					if(choice == -1) return;
 					int vertex = scheduler.getVertexFromAddList(choice);
@@ -156,7 +165,9 @@ public class Main
 					{
 						scheduler.addClass(vertex);
 						States returnState = scheduler.getState();
-						System.out.println(returnState.getMessage());
+						
+						printState(returnState);
+						
 						if(returnState == States.CLASS_ADDED || returnState == States.AT_UNIT_MAX) 
 						{
 							classPicked = true;
@@ -179,7 +190,7 @@ public class Main
 					int vertex = scheduler.getVertexFromRemoveList(choice);
 					if(vertex == Scheduler.INVALID_INDEX) 
 					{
-						System.out.println(States.INVALID_INDEX.getMessage());
+						printState(scheduler.getState());
 					}
 					else 
 					{
@@ -235,6 +246,20 @@ public class Main
 		
 	}
 	
+	public static void printState(States returnState) 
+	{
+		System.out.println("======================");
+		if(returnState.getType() == StateType.ERROR) 
+		{
+			System.out.println("ERROR --> " + returnState.getMessage());
+		}
+		else if(returnState.getType() == StateType.SUCCESS) 
+		{
+			System.out.println(returnState.getMessage());
+		}
+		System.out.println("======================");
+
+	}
 	
 }	
 

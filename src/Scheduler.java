@@ -248,6 +248,7 @@ public class Scheduler
 				index++;
 			}
 		}
+		if(index == 1) currentState = States.NO_AVAILABLE_CLASSES;
 		return s.toString();
 	}
 	

@@ -13,7 +13,8 @@ public enum States
 	REUSED_IDENTIFIER(8,"Class identifiers cannot be reused",StateType.ERROR),
 	FILE_NOT_FOUND(9,"The entered file cannot be found",StateType.ERROR),
 	INVALID_INDEX(10,"The list number entered is not valid enter again",StateType.ERROR),
-	UNDECLARED_IDENTIFIER(11,"This identifier has not been declared and is being used",StateType.ERROR);
+	UNDECLARED_IDENTIFIER(11,"This identifier has not been declared and is being used",StateType.ERROR),
+	NO_AVAILABLE_CLASSES(12,"There are no classes available for this semester",StateType.ERROR);
 	
 	private final int STATE_CODE;
 	
