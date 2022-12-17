@@ -163,7 +163,7 @@ public class Main
 					int vertex = scheduler.getVertexFromAddList(choice);
 					if(vertex == Scheduler.INVALID_INDEX) 
 					{
-						System.out.println(States.INVALID_INDEX.getMessage());
+						printState(scheduler.getState());
 					}
 					else 
 					{
@@ -189,13 +189,15 @@ public class Main
 				while(doneRemoving == false)
 				{	
 					String semesterStr = scheduler.getSemesterStr();
-					if(semesterStr == null)
+					States returnState = scheduler.getState();
+					if(returnState == States.NO_AVAILABLE_CLASSES)
 					{
-						printState(scheduler.getState());
+						printState(returnState);
 						return;
 					}
+					System.out.println(semesterStr);
 					int choice = (int) getNumber("Enter the number of the class you want ot remove or -1 to go back: ", -1, Integer.MAX_VALUE);
-					if(choice == -1)return;
+					if(choice == -1) return;
 					int vertex = scheduler.getVertexFromRemoveList(choice);
 					if(vertex == Scheduler.INVALID_INDEX) 
 					{
@@ -257,7 +259,7 @@ public class Main
 	
 	public static void printState(States returnState) 
 	{
-		System.out.println("======================");
+		System.out.println("=============================");
 		if(returnState.getType() == StateType.ERROR) 
 		{
 			System.out.println("ERROR --> " + returnState.getMessage());
@@ -266,7 +268,7 @@ public class Main
 		{
 			System.out.println(returnState.getMessage());
 		}
-		System.out.println("======================");
+		System.out.println("=============================");
 
 	}
 	

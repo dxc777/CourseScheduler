@@ -252,31 +252,38 @@ public class Scheduler
 		return s.toString();
 	}
 	
+	/**
+	 * getScheduleStr() works by operating on the sortedCourseList ArrayList.
+	 * As the name implies that ArrayList is sorted as that makes printing the classes 
+	 * easier. The outer loop ensures that after we exit from the inner while loop we 
+	 * are still in a valid index of the array and have not reached the section of the array
+	 * that contains all the courses that have not been taken yet. Before we enter the inner loop
+	 * the header is added to the built string and in the inner loop we add the courses that belong to 
+	 * that specific semester. This design avoids the need to have an awkward if statement that checks
+	 * to see if we are still in the correct semester and need to change the header if we aren't.
+	 * @return A string representation of the classes that have been picked
+	 */
 	public String getScheduleStr() 
 	{
 		Collections.sort(sortedCourseList);
 		StringBuilder s = new StringBuilder();
 		int i = 0;
 		s.append("========The schedule that has been planned so far========\n");
-		int currSemester = -1;
 		while(i < sortedCourseList.size() 
 				&& sortedCourseList.get(i).getSemesterTaken() != Course.NOT_TAKEN) 
 		{
-			Course course = sortedCourseList.get(i);
-			if(currSemester != course.getSemesterTaken()) 
+			int semester = sortedCourseList.get(i).getSemesterTaken();
+			s.append("----Semester #");
+			s.append(semester == INITIAL_SEMESTER ? 1 : semester + 1);
+			s.append("----\n");
+			while(i < sortedCourseList.size() && 
+					sortedCourseList.get(i).getSemesterTaken() == semester) 
 			{
-				s.append("----Semester #");
-				s.append(course.getSemesterTaken() + 1);
-				s.append("----");
+				s.append('\t');
+				s.append(sortedCourseList.get(i).toString());
 				s.append('\n');
-				currSemester = course.getSemesterTaken();
+				i++;
 			}
-			s.append('\t');
-			s.append(course.getCourseName());
-			s.append('-');
-			s.append(course.getUnit());
-			s.append(" units\n");
-			i++;
 		}
 		s.append("==========================================================");
 		return s.toString();
