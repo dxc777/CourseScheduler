@@ -293,7 +293,11 @@ public class Scheduler
 		{
 			i++;
 		}
-		
+		if(i == sortedCourseList.size()) 
+		{
+			currentState = States.NO_AVAILABLE_CLASSES;
+			return null;
+		}
 		int label = 1;
 		while(i < sortedCourseList.size() 
 				&& sortedCourseList.get(i).getSemesterTaken() == semester) 
@@ -331,8 +335,8 @@ public class Scheduler
 			return false;
 		}
 		this.semester = semester;
-		 this.currentState = States.SEMESTER_CHANGED;
-		 return true;
+		this.currentState = States.SEMESTER_CHANGED;
+		return true;
 	}
 		
 	public boolean donePlanning() 
@@ -342,7 +346,9 @@ public class Scheduler
 	
 	public States getState() 
 	{
-		return currentState;
+		States saveState = currentState;
+		currentState = States.NO_STATE;
+		return saveState;
 	}
 	
 	public int currSemester() 

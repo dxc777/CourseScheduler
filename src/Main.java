@@ -16,6 +16,8 @@ public class Main
 	
 	static ArrayList<Action> actions;
 	
+	static int EXIT_MENU = -1;
+	
 	public static void main(String[] args) throws Exception
 	{
 		addActions();
@@ -145,17 +147,19 @@ public class Main
 				while(classPicked == false) 
 				{
 					String availableClasses = scheduler.getAvailableClasses();
-					if(scheduler.getState() == States.NO_AVAILABLE_CLASSES) 
+					States returnState = scheduler.getState();
+					if(returnState == States.NO_AVAILABLE_CLASSES) 
 					{
-						printState(scheduler.getState());
+						printState(returnState);
 						return;
 					}
 					else 
 					{
 						System.out.println(availableClasses);
 					}
+					
 					int choice = (int)getNumber("Enter the number of the class you want to add or -1 to go back: ", -1,Integer.MAX_VALUE);
-					if(choice == -1) return;
+					if(choice == EXIT_MENU) return;
 					int vertex = scheduler.getVertexFromAddList(choice);
 					if(vertex == Scheduler.INVALID_INDEX) 
 					{
@@ -164,7 +168,7 @@ public class Main
 					else 
 					{
 						scheduler.addClass(vertex);
-						States returnState = scheduler.getState();
+						returnState = scheduler.getState();
 						
 						printState(returnState);
 						
@@ -184,7 +188,12 @@ public class Main
 				boolean doneRemoving = false;
 				while(doneRemoving == false)
 				{	
-					System.out.println(scheduler.getSemesterStr());
+					String semesterStr = scheduler.getSemesterStr();
+					if(semesterStr == null)
+					{
+						printState(scheduler.getState());
+						return;
+					}
 					int choice = (int) getNumber("Enter the number of the class you want ot remove or -1 to go back: ", -1, Integer.MAX_VALUE);
 					if(choice == -1)return;
 					int vertex = scheduler.getVertexFromRemoveList(choice);

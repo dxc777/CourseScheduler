@@ -14,7 +14,8 @@ public enum States
 	FILE_NOT_FOUND(9,"The entered file cannot be found",StateType.ERROR),
 	INVALID_INDEX(10,"The list number entered is not valid enter again",StateType.ERROR),
 	UNDECLARED_IDENTIFIER(11,"This identifier has not been declared and is being used",StateType.ERROR),
-	NO_AVAILABLE_CLASSES(12,"There are no classes available for this semester",StateType.ERROR);
+	NO_AVAILABLE_CLASSES(12,"There are no classes available for this semester",StateType.ERROR),
+	NO_STATE(13,"This state is meant to be a clear the current state variable",StateType.NEUTRAL);
 	
 	private final int STATE_CODE;
 	
