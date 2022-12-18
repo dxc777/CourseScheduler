@@ -259,8 +259,8 @@ public class Main
 		s.append(States.seperator);
 		s.append('\n');
 		s.append(header);
-		s.append('\n');
 		s.append(':');
+		s.append('\n');
 		ArrayList<Course> courseList = scheduler.getCourseList();
 		for(int i = 0; i < vertexes.size(); i++) 
 		{
