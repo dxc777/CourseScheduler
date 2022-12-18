@@ -63,40 +63,6 @@ public class Scheduler
 		}
 	}
 	
-	/**
-	 * After the user has seen the available classes for the semester they will pick the index of the 
-	 * class they want to pick. This method will return the actual vertex of the item on the list
-	 * @param index
-	 * @return
-	 */
-	public int getVertexFromAddList(int index) 
-	{
-		if(index < 0) 
-		{
-			this.currentState = States.INVALID_INDEX;
-			return INVALID_INDEX;
-		}
-		int vertex = 0;
-		while(vertex < courseList.size() && index > 0) 
-		{
-			Course course = courseList.get(vertex);
-			if(course.getSemesterTaken() == Course.NOT_TAKEN) 
-			{
-				if(semester > course.getSemesterAvailable() 
-					&& course.getSemesterAvailable() != Course.NOT_AVAILABLE) 
-				{
-					index--;
-				}
-			}
-			if(index > 0)vertex++;
-		}
-		if(index > 0 && vertex >= courseList.size()) 
-		{
-			this.currentState = States.INVALID_INDEX;
-			return INVALID_INDEX;
-		}
-		return vertex;
-	}
 	
 	public boolean addClass(int vertex) 
 	{
@@ -201,26 +167,41 @@ public class Scheduler
 		return units;
 	}
 	
-	
-	public String getAvailableClasses() 
+
+	/**
+	 * Return the list of classes that are available for the current semester
+	 * @return
+	 */
+	public ArrayList<Integer> getAvailableClasses() 
 	{
-		StringBuilder s = new StringBuilder();
-		s.append("Available Courses:\n");
-		int index = 1;
-		for(int i = 0; i < courseList.size(); i++) 
+		ArrayList<Integer> availableCourses = new ArrayList<>();
+		//Vertex doubles as the vertex of the class in the graph and the 
+		//index in the coureslist array
+		for(int vertex = 0; vertex < courseList.size(); vertex++) 
 		{
-			Course course = courseList.get(i);
-			if(course.getSemesterTaken() != Course.NOT_TAKEN) continue;
-			if(semester > course.getSemesterAvailable()
-					&& course.getSemesterAvailable() != Course.NOT_AVAILABLE) 
+			Course currCourse = courseList.get(vertex);
+			
+			//IF this is true then the prerequisites for the class have not been met and thus
+			//the class cannot be taken
+			if(currCourse.getSemesterAvailable() == Course.NOT_AVAILABLE) continue;
+			//since the prerequisites have been met we need to make sure 
+			//we are in a semester where we can take it and the course have not been taken yet
+			if(this.semester > currCourse.getSemesterAvailable() && 
+					currCourse.getSemesterTaken() == Course.NOT_TAKEN) 
 			{
-				s.append(index + ")");
-				s.append(course.getCourseName() + " Units: " + course.getUnit() + "\n");
-				index++;
+				availableCourses.add(vertex);
 			}
 		}
-		if(index == 1) currentState = States.NO_AVAILABLE_CLASSES;
-		return s.toString();
+		
+		if(availableCourses.size() == 0) 
+		{
+			currentState = States.NO_AVAILABLE_CLASSES;
+			return null;
+		}
+		else 
+		{
+			return availableCourses;
+		}
 	}
 	
 	/**
