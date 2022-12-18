@@ -63,6 +63,40 @@ public class Scheduler
 		}
 	}
 	
+	/**
+	 * After the user has seen the available classes for the semester they will pick the index of the 
+	 * class they want to pick. This method will return the actual vertex of the item on the list
+	 * @param index
+	 * @return
+	 */
+	public int getVertexFromAddList(int index) 
+	{
+		if(index < 0) 
+		{
+			this.currentState = States.INVALID_INDEX;
+			return INVALID_INDEX;
+		}
+		int vertex = 0;
+		while(vertex < courseList.size() && index > 0) 
+		{
+			Course course = courseList.get(vertex);
+			if(course.getSemesterTaken() == Course.NOT_TAKEN) 
+			{
+				if(semester > course.getSemesterAvailable() 
+					&& course.getSemesterAvailable() != Course.NOT_AVAILABLE) 
+				{
+					index--;
+				}
+			}
+			if(index > 0)vertex++;
+		}
+		if(index > 0 && vertex >= courseList.size()) 
+		{
+			this.currentState = States.INVALID_INDEX;
+			return INVALID_INDEX;
+		}
+		return vertex;
+	}
 	
 	public boolean addClass(int vertex) 
 	{
@@ -105,6 +139,34 @@ public class Scheduler
 			this.currentState = States.CLASS_ADDED;
 		}
 		return true;
+	}
+	
+	public int getVertexFromRemoveList(int listIndex) 
+	{
+		if(listIndex < 0) 
+		{
+			this.currentState = States.INVALID_INDEX;
+			return INVALID_INDEX;
+		}
+		int vertex = 0; 
+		while(vertex < sortedCourseList.size() 
+				&& sortedCourseList.get(vertex).getSemesterTaken() != semester) 
+		{
+			vertex++;
+		}
+		
+		while(vertex < sortedCourseList.size() && listIndex > 0
+				&& sortedCourseList.get(vertex).getSemesterTaken() == semester) 
+		{
+			listIndex--;
+			if(listIndex > 0) vertex++;
+		}
+		if(vertex >= sortedCourseList.size() || listIndex != 0) 
+		{
+			this.currentState = States.INVALID_INDEX;
+			return INVALID_INDEX;
+		}
+		return vertex;
 	}
 	
 	public ArrayList<Integer> removeClass(int vertex)
@@ -150,69 +212,6 @@ public class Scheduler
 		}
 		
 		return removedClasses;
-	}
-	
-	/**
-	 * After the user has seen the available classes for the semester they will pick the index of the 
-	 * class they want to pick. This method will return the actual vertex of the item on the list
-	 * @param index
-	 * @return
-	 */
-	public int getVertexFromAddList(int index) 
-	{
-		if(index < 0) 
-		{
-			this.currentState = States.INVALID_INDEX;
-			return INVALID_INDEX;
-		}
-		int vertex = 0;
-		while(vertex < courseList.size() && index > 0) 
-		{
-			Course course = courseList.get(vertex);
-			if(course.getSemesterTaken() == Course.NOT_TAKEN) 
-			{
-				if(semester > course.getSemesterAvailable() 
-					&& course.getSemesterAvailable() != Course.NOT_AVAILABLE) 
-				{
-					index--;
-				}
-			}
-			if(index > 0)vertex++;
-		}
-		if(index > 0 && vertex >= courseList.size()) 
-		{
-			this.currentState = States.INVALID_INDEX;
-			return INVALID_INDEX;
-		}
-		return vertex;
-	}
-	
-	public int getVertexFromRemoveList(int listIndex) 
-	{
-		if(listIndex < 0) 
-		{
-			this.currentState = States.INVALID_INDEX;
-			return INVALID_INDEX;
-		}
-		int vertex = 0; 
-		while(vertex < sortedCourseList.size() 
-				&& sortedCourseList.get(vertex).getSemesterTaken() != semester) 
-		{
-			vertex++;
-		}
-		
-		while(vertex < sortedCourseList.size() && listIndex > 0
-				&& sortedCourseList.get(vertex).getSemesterTaken() == semester) 
-		{
-			listIndex--;
-			if(listIndex > 0) vertex++;
-		}
-		if(vertex >= sortedCourseList.size() || listIndex != 0) 
-		{
-			this.currentState = States.INVALID_INDEX;
-			return INVALID_INDEX;
-		}
-		return vertex;
 	}
 	
 	
@@ -294,7 +293,7 @@ public class Scheduler
 		Collections.sort(sortedCourseList);
 		StringBuilder s = new StringBuilder();
 		int i = 0; 
-		s.append("========The schedule that has been planned for semester #" + (semester) +"========\n");
+		s.append("========The schedule that has been planned for semester #" + (semester + 1) +"========\n");
 		while(i < sortedCourseList.size() 
 				&& sortedCourseList.get(i).getSemesterTaken() != semester) 
 		{
