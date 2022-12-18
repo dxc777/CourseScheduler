@@ -194,25 +194,25 @@ public class Scheduler
 			this.currentState = States.INVALID_INDEX;
 			return INVALID_INDEX;
 		}
-		int i = 0; 
-		while(i < sortedCourseList.size() 
-				&& sortedCourseList.get(i).getSemesterTaken() != semester) 
+		int vertex = 0; 
+		while(vertex < sortedCourseList.size() 
+				&& sortedCourseList.get(vertex).getSemesterTaken() != semester) 
 		{
-			i++;
+			vertex++;
 		}
 		
-		while(i < sortedCourseList.size() && listIndex > 0
-				&& sortedCourseList.get(i).getSemesterTaken() == semester) 
+		while(vertex < sortedCourseList.size() && listIndex > 0
+				&& sortedCourseList.get(vertex).getSemesterTaken() == semester) 
 		{
 			listIndex--;
-			if(listIndex > 0) i++;
+			if(listIndex > 0) vertex++;
 		}
-		if(i >= sortedCourseList.size() || listIndex != 0) 
+		if(vertex >= sortedCourseList.size() || listIndex != 0) 
 		{
 			this.currentState = States.INVALID_INDEX;
 			return INVALID_INDEX;
 		}
-		return i;
+		return vertex;
 	}
 	
 	

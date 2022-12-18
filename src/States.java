@@ -17,6 +17,9 @@ public enum States
 	NO_AVAILABLE_CLASSES(12,"There are no classes available for this semester",StateType.ERROR),
 	NO_STATE(13,"This state is meant to be a clear the current state variable",StateType.NEUTRAL);
 	
+	//I placed the seperator here as this was the most fitting place
+	static String seperator = "==================================";
+	
 	private final int STATE_CODE;
 	
 	private final String MESSAGE;

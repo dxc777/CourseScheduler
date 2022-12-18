@@ -1,7 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main 
@@ -205,12 +204,14 @@ public class Main
 					}
 					else 
 					{
+						System.out.println(States.seperator);
 						ArrayList<Integer> removedClases = scheduler.removeClass(vertex);
 						System.out.println("These are the clases that were removed from the schedule:");
 						for(int i = 0; i < removedClases.size(); i++) 
 						{
 							System.out.println("\t" + scheduler.getCourseList().get(removedClases.get(i)));
 						}
+						System.out.println(States.seperator);
 						doneRemoving = true;
 					}
 				}
@@ -259,7 +260,7 @@ public class Main
 	
 	public static void printState(States returnState) 
 	{
-		System.out.println("=============================");
+		System.out.println(States.seperator);
 		if(returnState.getType() == StateType.ERROR) 
 		{
 			System.out.println("ERROR --> " + returnState.getMessage());
@@ -268,7 +269,7 @@ public class Main
 		{
 			System.out.println(returnState.getMessage());
 		}
-		System.out.println("=============================");
+		System.out.println(States.seperator);
 
 	}
 	
