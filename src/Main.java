@@ -158,7 +158,7 @@ public class Main
 						System.out.println(availableClasses);
 					}
 					
-					int choice = (int)getNumber("Enter the number of the class you want to add or -1 to go back: ", -1,Integer.MAX_VALUE);
+					int choice = (int)getNumber("Enter the number of the class you want to add or "+ RETURN + " to go back: ", RETURN,Integer.MAX_VALUE);
 					if(choice == RETURN) return;
 					int vertex = scheduler.getVertexFromAddList(choice);
 					if(vertex == Scheduler.INVALID_INDEX) 
@@ -196,7 +196,7 @@ public class Main
 				
 				String semesterStr = printCourseList(semesterCourses, "Classes taken during this semster: ");
 				System.out.println(semesterStr);
-				int choice = (int) getNumber("Enter the number of the class you want to remove or 0 to go back: ", 0, semesterCourses.size());
+				int choice = (int) getNumber("Enter the number of the class you want to remove or " + RETURN + " to go back: ", RETURN, semesterCourses.size());
 				if(choice == RETURN) return;
 				
 				
