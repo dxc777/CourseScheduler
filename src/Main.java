@@ -257,13 +257,19 @@ public class Main
 	{
 		StringBuilder s = new StringBuilder();
 		s.append(States.seperator);
+		s.append('\n');
 		s.append(header);
+		s.append('\n');
 		s.append(':');
 		ArrayList<Course> courseList = scheduler.getCourseList();
 		for(int i = 0; i < vertexes.size(); i++) 
 		{
+			s.append(i + 1);
+			s.append(')');
 			s.append(courseList.get(vertexes.get(i)).toString());
+			s.append('\n');
 		}
+		s.append(States.seperator);
 		return s.toString();
 	}
 	
