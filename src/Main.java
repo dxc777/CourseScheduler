@@ -15,7 +15,7 @@ public class Main
 	
 	static ArrayList<Action> actions;
 	
-	static int EXIT_MENU = -1;
+	static int RETURN = 0;
 	
 	public static void main(String[] args) throws Exception
 	{
@@ -138,6 +138,7 @@ public class Main
 			}
 		});
 		
+		//TODO: change this one as well
 		actions.add(new Action("Add a class to the current semester") 
 		{
 			public void doAction() 
@@ -158,7 +159,7 @@ public class Main
 					}
 					
 					int choice = (int)getNumber("Enter the number of the class you want to add or -1 to go back: ", -1,Integer.MAX_VALUE);
-					if(choice == EXIT_MENU) return;
+					if(choice == RETURN) return;
 					int vertex = scheduler.getVertexFromAddList(choice);
 					if(vertex == Scheduler.INVALID_INDEX) 
 					{
@@ -184,38 +185,31 @@ public class Main
 		{
 			public void doAction() 
 			{
-				boolean doneRemoving = false;
-				while(doneRemoving == false)
-				{	
-					String semesterStr = scheduler.getSemesterStr();
-					States returnState = scheduler.getState();
-					if(returnState == States.NO_AVAILABLE_CLASSES)
-					{
-						printState(returnState);
-						return;
-					}
-					System.out.println(semesterStr);
-					int choice = (int) getNumber("Enter the number of the class you want ot remove or -1 to go back: ", -1, Integer.MAX_VALUE);
-					if(choice == -1) return;
-					int vertex = scheduler.getVertexFromRemoveList(choice);
-					if(vertex == Scheduler.INVALID_INDEX) 
-					{
-						printState(scheduler.getState());
-					}
-					else 
-					{
-						System.out.println(States.seperator);
-						ArrayList<Integer> removedClases = scheduler.removeClass(vertex);
-						System.out.println("These are the clases that were removed from the schedule:");
-						for(int i = 0; i < removedClases.size(); i++) 
-						{
-							System.out.println("\t" + scheduler.getCourseList().get(removedClases.get(i)));
-						}
-						System.out.println(States.seperator);
-						doneRemoving = true;
-					}
+				ArrayList<Integer> semesterCourses = scheduler.getSemesterCourses();
+				
+				States returnState = scheduler.getState();
+				if(returnState == States.NO_AVAILABLE_CLASSES)
+				{
+					printState(returnState);
+					return;
 				}
 				
+				String semesterStr = printCourseList(semesterCourses, "Classes taken during this semster: ");
+				System.out.println(semesterStr);
+				int choice = (int) getNumber("Enter the number of the class you want to remove or 0 to go back: ", 0, semesterCourses.size());
+				if(choice == RETURN) return;
+				
+				
+				//At this point choice is in the range [1 - semesterCourse.size()]
+				System.out.println(States.seperator);
+				ArrayList<Integer> removedClases = scheduler.removeClass(semesterCourses.get(choice - 1));
+				System.out.println("These are the clases that were removed from the schedule:");
+				for(int i = 0; i < removedClases.size(); i++) 
+				{
+					System.out.println("\t" + scheduler.getCourseList().get(removedClases.get(i)));
+				}
+				System.out.println(States.seperator);
+			
 			}
 		});
 		
@@ -256,6 +250,21 @@ public class Main
 
 		
 		
+	}
+	
+
+	private static String printCourseList(ArrayList<Integer> vertexes, String header)
+	{
+		StringBuilder s = new StringBuilder();
+		s.append(States.seperator);
+		s.append(header);
+		s.append(':');
+		ArrayList<Course> courseList = scheduler.getCourseList();
+		for(int i = 0; i < vertexes.size(); i++) 
+		{
+			s.append(courseList.get(vertexes.get(i)).toString());
+		}
+		return s.toString();
 	}
 	
 	public static void printState(States returnState) 

@@ -141,34 +141,6 @@ public class Scheduler
 		return true;
 	}
 	
-	public int getVertexFromRemoveList(int listIndex) 
-	{
-		if(listIndex < 0) 
-		{
-			this.currentState = States.INVALID_INDEX;
-			return INVALID_INDEX;
-		}
-		int vertex = 0; 
-		while(vertex < sortedCourseList.size() 
-				&& sortedCourseList.get(vertex).getSemesterTaken() != semester) 
-		{
-			vertex++;
-		}
-		
-		while(vertex < sortedCourseList.size() && listIndex > 0
-				&& sortedCourseList.get(vertex).getSemesterTaken() == semester) 
-		{
-			listIndex--;
-			if(listIndex > 0) vertex++;
-		}
-		if(vertex >= sortedCourseList.size() || listIndex != 0) 
-		{
-			this.currentState = States.INVALID_INDEX;
-			return INVALID_INDEX;
-		}
-		return vertex;
-	}
-	
 	public ArrayList<Integer> removeClass(int vertex)
 	{
 		//To be removed holds all vertex that are already taken classes and must be removed 
@@ -288,38 +260,36 @@ public class Scheduler
 		return s.toString();
 	}
 	
-	public String getSemesterStr() 
+
+	/**
+	 * Returns a list of all the classes that have been taken during the current semester
+	 * @return null if no classes taken during semester or the list of classes
+	 */
+	public ArrayList<Integer> getSemesterCourses() 
 	{
-		Collections.sort(sortedCourseList);
-		StringBuilder s = new StringBuilder();
-		int i = 0; 
-		s.append("========The schedule that has been planned for semester #" + (semester + 1) +"========\n");
-		while(i < sortedCourseList.size() 
-				&& sortedCourseList.get(i).getSemesterTaken() != semester) 
+		//These are courses that were taken within the semester
+		ArrayList<Integer> courses = new ArrayList<>();
+		//the vertex variable is also the variable used to iterate through the course list
+		//this can be done since the index in the courselist is the same as the vertex in the graph
+		for(int vertex = 0; vertex < courseList.size(); vertex++) 
 		{
-			i++;
+			Course currCourse = courseList.get(vertex);
+			if(currCourse.getSemesterTaken() == this.semester) 
+			{
+				courses.add(vertex);
+			}
 		}
-		if(i == sortedCourseList.size()) 
+		
+		//If the list is empty then no classes have been taken for this semster
+		if(courses.size() == 0) 
 		{
 			currentState = States.NO_AVAILABLE_CLASSES;
 			return null;
 		}
-		int label = 1;
-		while(i < sortedCourseList.size() 
-				&& sortedCourseList.get(i).getSemesterTaken() == semester) 
+		else 
 		{
-			Course course = sortedCourseList.get(i);
-			s.append(label);
-			s.append(')');
-			s.append(course.getCourseName());
-			s.append(' ');
-			s.append(course.getUnit());
-			s.append('\n');
-			i++;
-			label++;
+			return courses;
 		}
-		s.append("==========================================================");
-		return s.toString();
 	}
 
 	public int getMaxUnits()
