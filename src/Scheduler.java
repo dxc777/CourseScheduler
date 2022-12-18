@@ -169,7 +169,8 @@ public class Scheduler
 	
 
 	/**
-	 * Return the list of classes that are available for the current semester
+	 * Return the list of classes that are available for the current semester by checking if
+	 * the class is available, can be taken within the current semester, and has not been taken yet
 	 * @return
 	 */
 	public ArrayList<Integer> getAvailableClasses() 

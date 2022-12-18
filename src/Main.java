@@ -143,41 +143,24 @@ public class Main
 		{
 			public void doAction() 
 			{
-				boolean classPicked = false;
-				while(classPicked == false) 
+				ArrayList<Integer> availableClasses = scheduler.getAvailableClasses();
+				States returnState = scheduler.getState();
+				if(returnState == States.NO_AVAILABLE_CLASSES) 
 				{
-					String availableClasses = scheduler.getAvailableClasses();
-					States returnState = scheduler.getState();
-					if(returnState == States.NO_AVAILABLE_CLASSES) 
-					{
-						printState(returnState);
-						return;
-					}
-					else 
-					{
-						System.out.println(availableClasses);
-					}
-					
-					int choice = (int)getNumber("Enter the number of the class you want to add or "+ RETURN + " to go back: ", RETURN,Integer.MAX_VALUE);
-					if(choice == RETURN) return;
-					int vertex = scheduler.getVertexFromAddList(choice);
-					if(vertex == Scheduler.INVALID_INDEX) 
-					{
-						printState(scheduler.getState());
-					}
-					else 
-					{
-						scheduler.addClass(vertex);
-						returnState = scheduler.getState();
-						
-						printState(returnState);
-						
-						if(returnState == States.CLASS_ADDED || returnState == States.AT_UNIT_MAX) 
-						{
-							classPicked = true;
-						}
-					}
+					printState(returnState);
+					return;
 				}
+
+				String availableStr = printCourseList(availableClasses, "These are the classes that can be taken for semester #" + (scheduler.currSemester() + 1));
+				System.out.println(availableStr);
+				
+				int choice = (int)getNumber("Enter the number of the class you want to add or "+ RETURN + " to go back: ", RETURN,availableClasses.size());
+				if(choice == RETURN) return;
+				int vertex = availableClasses.get(choice - 1);
+				scheduler.addClass(vertex);
+				returnState = scheduler.getState();
+				
+				printState(returnState);
 			}
 		});
 		
