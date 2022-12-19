@@ -120,19 +120,20 @@ public class Scheduler
 		Edge curr = requiredByXGraph.getHeadOfVertex(vertex).next;
 		while(curr != null) 
 		{
+			//This expression is checking if the class was taken if yes it needs to be removed
 			if(courseList.get(curr.adjVertex).getSemesterTaken() != Course.NOT_TAKEN) 
 			{
 				toBeRemoved.add(curr.adjVertex);
-				courseList.get(curr.adjVertex).setSemesterAvailable(Course.NOT_AVAILABLE);
-				courseList.get(curr.adjVertex).setSemesterTaken(Course.NOT_TAKEN);
 			}
+			inDegreeCount[curr.adjVertex]++;
+			courseList.get(curr.adjVertex).setSemesterAvailable(Course.NOT_AVAILABLE);
+			courseList.get(curr.adjVertex).setSemesterTaken(Course.NOT_TAKEN);
 			curr = curr.next;
 		}
 		
 		while(toBeRemoved.isEmpty() == false) 
 		{
 			int v = toBeRemoved.poll();
-			inDegreeCount[v]++;
 			classesTaken--;
 			
 			curr = requiredByXGraph.getHeadOfVertex(v).next;
@@ -141,9 +142,10 @@ public class Scheduler
 				if(courseList.get(curr.adjVertex).getSemesterTaken() != Course.NOT_TAKEN) 
 				{
 					toBeRemoved.add(curr.adjVertex);
-					courseList.get(curr.adjVertex).setSemesterAvailable(Course.NOT_AVAILABLE);
-					courseList.get(curr.adjVertex).setSemesterTaken(Course.NOT_TAKEN);
 				}
+				inDegreeCount[curr.adjVertex]++;
+				courseList.get(curr.adjVertex).setSemesterAvailable(Course.NOT_AVAILABLE);
+				courseList.get(curr.adjVertex).setSemesterTaken(Course.NOT_TAKEN);
 				curr = curr.next;
 			}
 			removedClasses.add(v);
