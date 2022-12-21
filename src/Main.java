@@ -16,6 +16,8 @@ public class Main
 	
 	static ArrayList<Action> actions;
 	
+	static int CHANGE_UNITS_INDEX = 3;
+	
 	static int RETURN = 0;
 	
 	public static void main(String[] args) throws Exception
@@ -26,8 +28,8 @@ public class Main
 			file = openFile();
 			parsedFile = new Parser(file);
 			scheduler = new Scheduler(parsedFile);
-			float maxUnits = getNumber("Enter the max units you wish to take per semester: ", 1, Integer.MAX_VALUE);
-			scheduler.setMaxUnits((int)maxUnits);
+			
+			actions.get(CHANGE_UNITS_INDEX).doAction();
 			
 			while(scheduler.donePlanning() == false) 
 			{
@@ -73,8 +75,9 @@ public class Main
 	}
 	
 	/**
-	 * Get number get a number and also handles errors when a number would be below or above a specified 
-	 * range. Or if the passed number is not a number.
+	 * Handles getting a number from the user. It will keep the user in a loop until the entered number 
+	 * is within the specified range of [min, max]. It also checks to see if the range makes sense and throws an error if it
+	 * doesn't.
 	 * @param prompt
 	 * @param min
 	 * @param max
@@ -82,6 +85,12 @@ public class Main
 	 */
 	public static float getNumber(String prompt, int min, int max)
 	{
+		if(max < min) 
+		{
+			throw new IllegalArgumentException("The max value must be greater than the min value "
+					+ "(In this case the max value is less than the min value )");
+		}
+		
 		float num = 0;
 		boolean pickedNum = false;
 		do 
@@ -193,6 +202,15 @@ public class Main
 			}
 		});
 		
+		
+		actions.add(new Action("Change set max units") 
+		{
+			public void doAction() 
+			{
+				scheduler.setMaxUnits((int) getNumber("Enter the max units allowed for one semester (must be greater than 0): ", 1, Integer.MAX_VALUE));
+				printState(scheduler.getState());
+			}
+		});
 		
 		
 		actions.add(new Action("Move to a different semester") 

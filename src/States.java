@@ -15,7 +15,9 @@ public enum States
 	INVALID_INDEX(10,"The list number entered is not valid enter again",StateType.ERROR),
 	UNDECLARED_IDENTIFIER(11,"This identifier has not been declared and is being used",StateType.ERROR),
 	NO_AVAILABLE_CLASSES(12,"There are no classes available for this semester",StateType.ERROR),
-	NO_STATE(13,"This state is meant to be a clear the current state variable",StateType.NEUTRAL);
+	NO_STATE(13,"This state is meant to be a clear the current state variable",StateType.NEUTRAL),
+	INVALID_UNITS(14,"Units cannot be less than or equal to zero",StateType.ERROR),
+	UNITS_CHANGED(15,"Units changed succesfully",StateType.SUCCESS);
 	
 	//I placed the seperator here as this was the most fitting place
 	static String seperator = "==================================";

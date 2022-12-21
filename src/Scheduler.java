@@ -284,9 +284,18 @@ public class Scheduler
 		return maxUnits;
 	}
 
+	
 	public void setMaxUnits(int maxUnits)
 	{
-		this.maxUnits = maxUnits;
+		if(maxUnits <= 0) 
+		{
+			currentState = States.INVALID_UNITS;
+		}
+		else 
+		{
+			currentState = States.UNITS_CHANGED;
+			this.maxUnits = maxUnits;
+		}
 	}
 	
 	
