@@ -125,6 +125,9 @@ public class Scheduler
 			{
 				toBeRemoved.add(curr.adjVertex);
 			}
+			//Regardless of if the class was taken or not the adjacent vertexes now
+			//have a prerequisite that needs to be completed
+			//so all have their in degree count incremented by one
 			inDegreeCount[curr.adjVertex]++;
 			courseList.get(curr.adjVertex).setSemesterAvailable(Course.NOT_AVAILABLE);
 			courseList.get(curr.adjVertex).setSemesterTaken(Course.NOT_TAKEN);

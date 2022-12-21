@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main 
@@ -34,13 +35,8 @@ public class Main
 				{
 					System.out.println((i + 1) + ") " + actions.get(i).getDescription());
 				}
-				int listIndex = -1;
-				do 
-				{
-					listIndex = (int)getNumber("Enter the number of the action you want to take: ", 1, actions.size());
-				}while(listIndex < 1 || listIndex > actions.size());
+				int listIndex = (int)getNumber("Enter the number of the action you want to take: ", 1, actions.size());
 				listIndex--;
-				
 				actions.get(listIndex).doAction();
 				
 			}
@@ -97,20 +93,21 @@ public class Main
 				kb.nextLine();
 				if(num < min) 
 				{
-					System.out.println("The entered number is below the set minimum (" + min + ")");
+					System.out.println("Error -> The entered number is below the set minimum (" + min + ")");
 				}
 				else if(num > max) 
 				{
-					System.out.println("The entered number is above the set maximum (" + max + ")");
+					System.out.println("Error -> The entered number is above the set maximum (" + max + ")");
 				}
 				else 
 				{
 					pickedNum = true;
 				}
 			}
-			catch(NumberFormatException e) 
+			catch(InputMismatchException e) 
 			{
-				System.out.println("The entered number cannot be parsed");
+				System.out.println("Error -> The entered number cannot be parsed");
+				kb.nextLine();
 			}
 			
 		}while(pickedNum == false);
@@ -195,6 +192,7 @@ public class Main
 			
 			}
 		});
+		
 		
 		
 		actions.add(new Action("Move to a different semester") 
