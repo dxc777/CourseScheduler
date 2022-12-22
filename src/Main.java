@@ -46,6 +46,21 @@ public class Main
 
 	private static void executeActions()
 	{
+		//Print useful information for the user
+		System.out.println("Current semester: " + (scheduler.currSemester() + 1));
+		ArrayList<Integer> courseList = scheduler.getSemesterCourses();
+		if(scheduler.getState() == States.NO_SEMESTER_COURSES) 
+		{
+			System.out.println(States.NO_SEMESTER_COURSES.getMessage());
+		}
+		else 
+		{
+			System.out.println(printCourseList(courseList, "Courses taken this semester"));
+			System.out.println("Total units taken this semster: " + scheduler.getSemesterUnits());
+			System.out.println(States.seperator);
+		}
+		
+		
 		//Print the action list and execute the corresponding action
 		for(int i = 0; i < actions.size(); i++) 
 		{
