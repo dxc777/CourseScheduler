@@ -151,7 +151,7 @@ public class Main
 			{
 				ArrayList<Integer> availableClasses = scheduler.getAvailableClasses();
 				States returnState = scheduler.getState();
-				if(returnState == States.NO_AVAILABLE_CLASSES) 
+				if(returnState == States.NO_AVAILABLE_COURSE) 
 				{
 					printState(returnState);
 					return;
@@ -177,7 +177,7 @@ public class Main
 				ArrayList<Integer> semesterCourses = scheduler.getSemesterCourses();
 				
 				States returnState = scheduler.getState();
-				if(returnState == States.NO_AVAILABLE_CLASSES)
+				if(returnState == States.NO_SEMESTER_COURSES)
 				{
 					printState(returnState);
 					return;
@@ -189,7 +189,7 @@ public class Main
 				if(choice == RETURN) return;
 				
 				
-				//At this point choice is in the range [1 - semesterCourse.size()]
+				//At this point the "choice" variable is in the range [1 - semesterCourse.size()]
 				System.out.println(States.seperator);
 				ArrayList<Integer> removedClases = scheduler.removeClass(semesterCourses.get(choice - 1));
 				System.out.println("These are the clases that were removed from the schedule:");

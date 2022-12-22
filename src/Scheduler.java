@@ -201,11 +201,12 @@ public class Scheduler
 		
 		if(availableCourses.size() == 0) 
 		{
-			currentState = States.NO_AVAILABLE_CLASSES;
+			currentState = States.NO_AVAILABLE_COURSE;
 			return null;
 		}
 		else 
 		{
+			currentState = States.COURSES_AVAILABLE;
 			return availableCourses;
 		}
 	}
@@ -270,11 +271,12 @@ public class Scheduler
 		//If the list is empty then no classes have been taken for this semster
 		if(courses.size() == 0) 
 		{
-			currentState = States.NO_AVAILABLE_CLASSES;
+			currentState = States.NO_SEMESTER_COURSES;
 			return null;
 		}
 		else 
 		{
+			currentState = States.SEMESTER_RETURNED;
 			return courses;
 		}
 	}

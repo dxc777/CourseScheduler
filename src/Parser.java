@@ -65,8 +65,7 @@ public class Parser
 			String[] data = line.split(SEPERATOR);
 			if(data.length < MINIMUM_DATA_LENGTH) 
 			{
-				throw new IllegalArgumentException("Line does have minimum amount of data needed to parse:\n" 
-						+ line);
+				throw new IllegalArgumentException(States.INSUFFICIENT_DATA.getMessage() + line);
 			}
 			String courseIdentifier = filterData(data[ID_INDEX]);
 			String courseName = data[NAME_INDEX].trim();
@@ -78,7 +77,7 @@ public class Parser
 			}
 			catch(NumberFormatException e) 
 			{
-				System.out.println("Cannot parse the units for this entry " + Arrays.toString(data));
+				System.out.println(States.NAN.getMessage() + Arrays.toString(data));
 				System.exit(0);
 			}
 			
