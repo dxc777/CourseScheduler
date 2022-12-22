@@ -33,18 +33,27 @@ public class Main
 			
 			while(scheduler.donePlanning() == false) 
 			{
-				for(int i = 0; i < actions.size(); i++) 
-				{
-					System.out.println((i + 1) + ") " + actions.get(i).getDescription());
-				}
-				int listIndex = (int)getNumber("Enter the number of the action you want to take: ", 1, actions.size());
-				listIndex--;
-				actions.get(listIndex).doAction();
+				executeActions();
 				
 			}
 			System.out.println(scheduler.getScheduleStr());
 			
 		}
+	}
+
+
+
+
+	private static void executeActions()
+	{
+		//Print the action list and execute the corresponding action
+		for(int i = 0; i < actions.size(); i++) 
+		{
+			System.out.println((i + 1) + ") " + actions.get(i).getDescription());
+		}
+		int listIndex = (int)getNumber("Enter the number of the action you want to take: ", 1, actions.size());
+		listIndex--;
+		actions.get(listIndex).doAction();
 	}
 	
 
