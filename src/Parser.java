@@ -116,13 +116,12 @@ public class Parser
 			while(prereqs.isEmpty() == false) 
 			{
 				String className = prereqs.removeFirst();
-				Integer vertex = idToVertex.get(className);
-				if(vertex == null) 
+				Integer adjVertex = idToVertex.get(className);
+				if(adjVertex == null) 
 				{
 					System.out.println(States.UNDECLARED_IDENTIFIER.getMessage() + ": " + className);
 					System.exit(0);
 				}
-				int adjVertex = vertex;
 				requiredByXGraph.addEdge(adjVertex, i, DEFAULT_EDGE_WEIGHT);
 				prereqGraph.addEdge(i, adjVertex, DEFAULT_EDGE_WEIGHT);
 				inDegreeCount[i]++;
