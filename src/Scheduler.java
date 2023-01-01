@@ -112,7 +112,18 @@ public class Scheduler
 	}
 	
 	/**
-	 *
+	 * This function adds classes that have had their in-degree count just decremented to zero.
+	 * Therefore the class is ready to be made available but, the question is if it should be 
+	 * make available after the current semester or during this semester. The only class that can be added
+	 * during the current semester after having its in-degree count decremented is one that has
+	 * concurrent prerequisites. So the first if statement checks for that if it doesn't then its
+	 * a regular class. Next, since it is a concurrent class we need to ensure that all
+	 * the classes taken during the current semester are all their concurrent ones if not then it 
+	 * has to be added regularly. If all are concurrent classes then it can be added concurrently so 
+	 * it is marked available with the semester before the current one.
+	 * 
+	 *  TODO: what if a class is added concurrenlty then removed 
+	 *  TODO: what if a prereq to a class that is concurrent is removed
 	 */
 	private void makeClassAvailable(int vertex)
 	{
@@ -130,7 +141,10 @@ public class Scheduler
 			if(currCourse.getSemesterTaken() == semester) 
 			{
 				if(curr.weight != Parser.CONCURRENT_WEIGHT)
+				{
 					addConcurrently = false;
+					break;
+				}
 			}
 			curr = curr.next;
 		}
