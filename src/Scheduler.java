@@ -111,6 +111,9 @@ public class Scheduler
 		return true;
 	}
 	
+	/**
+	 *
+	 */
 	private void makeClassAvailable(int vertex)
 	{
 		if(courseList.get(vertex).coreqsPresent() == false) 
@@ -118,14 +121,7 @@ public class Scheduler
 			courseList.get(vertex).setSemesterAvailable(semester);
 			return;
 		}
-		/**
-		 * Since this class has prerequistes that can be taken concurrently than we 
-		 * need to see of the classes in the current semester are all concurrent or 
-		 * not a prereq of the class. This can be done by traversing the prereqgraph 
-		 * then accessing the data through the course list. It should be noted that the class prereqs
-		 * have already been fullfilled so all that needs to be checked is if all the 
-		 * courses in the current semester are all concurrent
-		 */
+
 		boolean addConcurrently = true;
 		Edge curr = prereqGraph.getHeadOfVertex(vertex);
 		while(curr != null) 
