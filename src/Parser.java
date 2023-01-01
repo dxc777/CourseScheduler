@@ -137,7 +137,7 @@ public class Parser
 				
 				if(hasConcurrClass) 
 				{
-					courseList.get(adjVertex).setCoreqsPresent(true);
+					courseList.get(i).setCoreqsPresent(true);
 				}
 				//The weight for edges of requiredByXGraph do not matter and are always default
 				requiredByXGraph.addEdge(adjVertex, i, DEFAULT_EDGE_WEIGHT);
