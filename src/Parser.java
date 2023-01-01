@@ -10,6 +10,8 @@ public class Parser
 	
 	private AdjList requiredByXGraph;
 	
+	private AdjList prereqGraph;
+	
 	private ArrayList<Course> courseList;
 	
 	private LinkedList<LinkedList<String>> unprocessedEdges;
@@ -105,6 +107,7 @@ public class Parser
 	public void buildGraph() 
 	{
 		requiredByXGraph = new AdjList(courseList.size());
+		prereqGraph = new AdjList(courseList.size());
 		inDegreeCount = new int[courseList.size()];
 		int i  = 0; 
 		while(unprocessedEdges.isEmpty() == false) 
@@ -121,6 +124,7 @@ public class Parser
 				}
 				int adjVertex = vertex;
 				requiredByXGraph.addEdge(adjVertex, i, DEFAULT_EDGE_WEIGHT);
+				prereqGraph.addEdge(i, adjVertex, DEFAULT_EDGE_WEIGHT);
 				inDegreeCount[i]++;
 			}
 			i++;
@@ -129,7 +133,8 @@ public class Parser
 	
 	/**
 	 * Filter data removes any character that is not a letter or digit until
-	 * the end of the string is reached
+	 * the end of the string is reached. The character '-' is also allowed as
+	 * it signifies that a class can be taken concurrently with other classes.
 	 * @param str
 	 */
 	public String filterData(String str) 
@@ -145,6 +150,10 @@ public class Parser
 			{
 				s.append(str.charAt(i));
 			}
+			else if(str.charAt(i) == '-')
+			{
+				s.append('-');
+			}
 		}
 		return s.toString();
 	}
@@ -158,6 +167,11 @@ public class Parser
 	public AdjList getRequiredByXGraph() 
 	{
 		return requiredByXGraph;
+	}
+	
+	public AdjList getPrereqGraph() 
+	{
+		return prereqGraph;
 	}
 	
 	public int[] getInDegreeCount() 
