@@ -25,7 +25,7 @@ public class Parser
 	
 	private final static int DEFAULT_EDGE_WEIGHT = 1;
 	
-	private final static int CONCURRENT_WEIGHT = 2;
+	public final static int CONCURRENT_WEIGHT = 2;
 	
 	private final static int ID_INDEX = 0;
 	
@@ -139,8 +139,9 @@ public class Parser
 				{
 					courseList.get(adjVertex).setCoreqsPresent(true);
 				}
-				
+				//The weight for edges of requiredByXGraph do not matter and are always default
 				requiredByXGraph.addEdge(adjVertex, i, DEFAULT_EDGE_WEIGHT);
+				//In the prereq graph the edge weight matters as it is used to determine if a class can be taken
 				prereqGraph.addEdge(i, adjVertex, hasConcurrClass ? CONCURRENT_WEIGHT : DEFAULT_EDGE_WEIGHT);
 				inDegreeCount[i]++;
 			}

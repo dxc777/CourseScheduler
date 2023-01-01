@@ -27,6 +27,8 @@ public class Scheduler
 	
 	private AdjList requiredByXGraph;
 	
+	private AdjList prereqGraph;
+	
 	private States currentState;
 	
 	private int[] inDegreeCount;
@@ -50,6 +52,7 @@ public class Scheduler
 		courseList = parsedFile.getCourseList();
 		sortedCourseList = new ArrayList<>(courseList);
 		requiredByXGraph = parsedFile.getRequiredByXGraph();
+		prereqGraph = parsedFile.getPrereqGraph();
 		inDegreeCount = parsedFile.getInDegreeCount();
 		semester = 0;
 		setMaxUnits(DEFAULT_MAX_UNITS);
@@ -91,7 +94,8 @@ public class Scheduler
 			inDegreeCount[curr.adjVertex]--;
 			if(inDegreeCount[curr.adjVertex] == 0) 
 			{
-				courseList.get(curr.adjVertex).setSemesterAvailable(semester);
+				//Add logic to concurrent classes here
+				makeClassAvailable(curr.adjVertex);
 			}
 			curr = curr.next;
 		}
@@ -107,6 +111,46 @@ public class Scheduler
 		return true;
 	}
 	
+	private void makeClassAvailable(int vertex)
+	{
+		if(courseList.get(vertex).coreqsPresent() == false) 
+		{
+			courseList.get(vertex).setSemesterAvailable(semester);
+			return;
+		}
+		/**
+		 * Since this class has prerequistes that can be taken concurrently than we 
+		 * need to see of the classes in the current semester are all concurrent or 
+		 * not a prereq of the class. This can be done by traversing the prereqgraph 
+		 * then accessing the data through the course list. It should be noted that the class prereqs
+		 * have already been fullfilled so all that needs to be checked is if all the 
+		 * courses in the current semester are all concurrent
+		 */
+		boolean addConcurrently = true;
+		Edge curr = prereqGraph.getHeadOfVertex(vertex);
+		while(curr != null) 
+		{
+			Course currCourse = courseList.get(vertex);
+			if(currCourse.getSemesterTaken() == semester) 
+			{
+				if(curr.weight != Parser.CONCURRENT_WEIGHT)
+					addConcurrently = false;
+			}
+			curr = curr.next;
+		}
+		
+		if(addConcurrently) 
+		{
+			courseList.get(vertex).setSemesterAvailable(semester - 1); 
+		}
+		else 
+		{
+			courseList.get(vertex).setSemesterAvailable(semester);
+		}
+		
+	}
+
+
 	public ArrayList<Integer> removeClass(int vertex)
 	{
 		//To be removed holds all vertex that are already taken classes and must be removed 
