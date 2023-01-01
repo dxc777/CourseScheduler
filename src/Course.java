@@ -16,6 +16,9 @@ public class Course implements Comparable<Course>
 	
 	private int semesterTaken;
 	
+	//This boolean value indicates whether or not the class has co requisites present and is assumed to be false
+	private boolean coreqsPresent;
+	
 	public static final int NOT_AVAILABLE = -2;
 	
 	public static final int NOT_TAKEN = Integer.MAX_VALUE;
@@ -26,6 +29,7 @@ public class Course implements Comparable<Course>
 		this.units = units;
 		semesterAvailable = NOT_AVAILABLE;
 		semesterTaken = NOT_TAKEN;
+		coreqsPresent = false;
 	}
 
 	public String getCourseName()
@@ -66,6 +70,16 @@ public class Course implements Comparable<Course>
 	public void setSemesterAvailable(int semesterAvailable) 
 	{
 		this.semesterAvailable = semesterAvailable;
+	}
+	
+	public boolean coreqsPresent() 
+	{
+		return coreqsPresent;
+	}
+	
+	public void setCoreqsPresent(boolean hasCoreqs) 
+	{
+		coreqsPresent = hasCoreqs;
 	}
 	
 	public String toString() 

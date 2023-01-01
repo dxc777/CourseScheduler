@@ -25,6 +25,8 @@ public class Parser
 	
 	private final static int DEFAULT_EDGE_WEIGHT = 1;
 	
+	private final static int CONCURRENT_WEIGHT = 2;
+	
 	private final static int ID_INDEX = 0;
 	
 	private final static int NAME_INDEX = 1;
@@ -34,6 +36,8 @@ public class Parser
 	private final static int PREREQ_INDEX = 3;
 	
 	private final static String SEPERATOR = ",";
+	
+	private final static String CONCURRENT_FLAG = "-C";
 	
 	public Parser(Scanner inputFile) 
 	{
@@ -116,14 +120,28 @@ public class Parser
 			while(prereqs.isEmpty() == false) 
 			{
 				String className = prereqs.removeFirst();
+				boolean hasConcurrClass = false;
+				
+				if(className.endsWith(CONCURRENT_FLAG)) 
+				{
+					className = className.substring(0,className.length() - CONCURRENT_FLAG.length());
+					hasConcurrClass = true;
+				}
+				
 				Integer adjVertex = idToVertex.get(className);
 				if(adjVertex == null) 
 				{
 					System.out.println(States.UNDECLARED_IDENTIFIER.getMessage() + ": " + className);
 					System.exit(0);
 				}
+				
+				if(hasConcurrClass) 
+				{
+					courseList.get(adjVertex).setCoreqsPresent(true);
+				}
+				
 				requiredByXGraph.addEdge(adjVertex, i, DEFAULT_EDGE_WEIGHT);
-				prereqGraph.addEdge(i, adjVertex, DEFAULT_EDGE_WEIGHT);
+				prereqGraph.addEdge(i, adjVertex, hasConcurrClass ? CONCURRENT_WEIGHT : DEFAULT_EDGE_WEIGHT);
 				inDegreeCount[i]++;
 			}
 			i++;
