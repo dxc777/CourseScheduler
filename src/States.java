@@ -2,11 +2,12 @@
 /**
  * States are messages used to tell the user how an action went. These are used in the 
  * Scheduler and Parser class. They are made in such a way that if a function modifies
- * the "curentState" variable then it will have at least 1 error state and 1  success state
- * All the states are also unique. When a function that modifies the state if called the
+ * the "curentState" variable then it will have at least 1 error state and at least 1 success state
+ * except for states in the parser class. All the states are also unique. When a function that modifies the state if called the
  * getState() function must be called to clear the state and report what happens to the user. 
  * If not then an exception is raised the next time a function that modifies that "currentState"
- * variable is called.
+ * variable is called. Since each state is unique and associated with 1 function then it is easy to find out 
+ * which function state was not cleared. 
  * @author J
  *
  */
