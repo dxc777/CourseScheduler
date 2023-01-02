@@ -133,10 +133,10 @@ public class Scheduler
 		}
 
 		boolean addConcurrently = true;
-		Edge curr = prereqGraph.getHeadOfVertex(vertex);
+		Edge curr = prereqGraph.getHeadOfVertex(vertex).next;
 		while(curr != null) 
 		{
-			Course currCourse = courseList.get(vertex);
+			Course currCourse = courseList.get(curr.adjVertex);
 			if(currCourse.getSemesterTaken() == semester) 
 			{
 				if(curr.weight != Parser.CONCURRENT_WEIGHT)
