@@ -94,7 +94,6 @@ public class Scheduler
 			inDegreeCount[curr.adjVertex]--;
 			if(inDegreeCount[curr.adjVertex] == 0) 
 			{
-				//Add logic to concurrent classes here
 				makeClassAvailable(curr.adjVertex);
 			}
 			curr = curr.next;
