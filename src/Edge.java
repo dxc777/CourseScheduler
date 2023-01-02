@@ -8,7 +8,11 @@ class Edge
 	
 	public Edge next;
 	
-	public Edge() {}
+	public Edge() 
+	{
+		adjVertex = weight = -1;
+		next = null;
+	}
 
 	public Edge(int adjVertex, int weight, Edge next)
 	{
