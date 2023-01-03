@@ -119,7 +119,11 @@ public class Parser
 		buildGraph();
 	}
 
-	
+	/**
+	 * Parse courses populates the course list array with all the courses in the input file. It also 
+	 * gives each course id a vertex to be paired with it. Then for each vertex it creates its list of 
+	 * prerequisites to be translated afterward. 
+	 */
 	private void parseCourses()
 	{
 		while(inputFile.hasNextLine()) 
@@ -164,12 +168,18 @@ public class Parser
 	}
 	
 
+	/**
+	 * Here the graphs are actually created. Since we know for sure how many classes are in the input file we can 
+	 * actually initialize the graphs we the amount of vertexes that need to be in it and the same is
+	 * true for the indegreeCount array. We can also process the edges of the graph since we know each class identifier's
+	 * respective vertex. 
+	 */
 	public void buildGraph() 
 	{
 		requiredByXGraph = new AdjList(courseList.size());
 		prereqGraph = new AdjList(courseList.size());
 		inDegreeCount = new int[courseList.size()];
-		int i  = 0; 
+		int vertex  = 0; 
 		while(unprocessedEdges.isEmpty() == false) 
 		{
 			LinkedList<String> prereqs = unprocessedEdges.removeFirst();
@@ -193,15 +203,15 @@ public class Parser
 				
 				if(hasConcurrClass) 
 				{
-					courseList.get(i).setCoreqsPresent(true);
+					courseList.get(vertex).setCoreqsPresent(true);
 				}
 				//The weight for edges of requiredByXGraph do not matter and are always default
-				requiredByXGraph.addEdge(adjVertex, i, DEFAULT_EDGE_WEIGHT);
+				requiredByXGraph.addEdge(adjVertex, vertex, DEFAULT_EDGE_WEIGHT);
 				//In the prereq graph the edge weight matters as it is used to determine if a class can be taken
-				prereqGraph.addEdge(i, adjVertex, hasConcurrClass ? CONCURRENT_WEIGHT : DEFAULT_EDGE_WEIGHT);
-				inDegreeCount[i]++;
+				prereqGraph.addEdge(vertex, adjVertex, hasConcurrClass ? CONCURRENT_WEIGHT : DEFAULT_EDGE_WEIGHT);
+				inDegreeCount[vertex]++;
 			}
-			i++;
+			vertex++;
 		}
 	}
 	
