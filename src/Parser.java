@@ -4,6 +4,75 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.LinkedList;
 
+
+/**
+ * The purpose of the parser class is turn the input file generated from the user into 
+ * the data structures and respective objects needed for the scheduler to perform its job. 
+ * The parser operates on the following assumptions:
+ * 1) Each class follows this syntax -> <CLASS_ID> , <CLASS_NAME> , <UNITS> {, <PREREQ_ID>}
+ * 2) Each class can only occupy 1 line of input
+ * The class id is a unique identifier used to specifically distinguish classes from one another.
+ * It is similar to the idea of a variable name. The class id cannot be reused after it has been used
+ * for one class and is also meant to be short and easy to type out. EX) Mat101 PSY110 CSC341. It can only consists of 
+ * letters and digits but the length does not matter. That means the user can have a identifier of single letter if they 
+ * would like ex) 'a' is a valid identifier.  
+ * The class name is is just the name of the class. It can consist of any characters and the only thing that is changed
+ * about it is that the leading and trailing whitespace is removed. 
+ * Units is the unit worth of the class. It can be written as a decimal or intger but it will be casted to 
+ * an integer after it is parsed. This is just to make it easier for the user as most of this information 
+ * can be copied and pasted and it may be written as a float on the users school portal. 
+ * The last requirement is optional. It is a list of classes that are required for the class to be taken.
+ * It consists of class id's. There is not limit on the length of the prerequisites.It can also be empty if the class has no prerequisites.
+ * 
+ * Note: the commas must be present. The spaces in between the names is not necessary and only there
+ * for readability. The angle brackets are also not needed they are just there for readability.
+ * However all this information must be present in one line.
+ * Casing and spacing does not matter. Internally all characters are changed to uppercase and all
+ * whitespace is removed.
+ * If a class has a prerequisite that can be taken concurrently than that class should have "-C" or "-c"
+ * at the end of the it and before the next prerequisite
+ * Here is an example line of input
+ * 
+ * Assume the prereq identifiers are declared elsewhere
+ * 			CSC123, Intro to computer science, 4.00, Mat 193, CSC123,mat142,pSy 7 -C,MNY 10-c
+ * 
+ * The inputfile is just the raw data from the user
+ * 
+ * RequiredByGraph -> This is a graph that for each vertex, v, all the edges of v are others classes that have v as a 
+ * prerequisite. For example say class A has a prerequisite of class B. Say there is also a function vertex(class name) that when
+ * given a class name will return the vertex in the graph. If we call vertex(B) and look at the edges of the B we will find the vertex(A)
+ * there since B is a prerequisite to take A. 
+ * 
+ * PrereqGrahp -> The prereq graph is the opposite of the requireByXGraph. It is short for prerequisite graph.
+ * And each vertex,v, in the graph gives the list of prerequisites for the vertex v.
+ * 
+ * courseList -> The course list is an arraylist of all the parsed data from the input file. 
+ * 
+ * NOTE: the course vertexe's are labeled with the numbers [0, n-1] with n being the number of classes present 
+ * in the input file. Therefore, when looking at the ith element in the course list or the requiredByXGraph or
+ * the prereqGraph they all refer to the same class. 
+ * 
+ * unprocessedEdges -> I did not specify that the classes need to be declared in order. They can be declared in any
+ * order that is convienent to the user. However, when looking through the prerequisite list of a certain class 
+ * we may encounter a vertex that is undeclared. 
+ * So we wont know what the actual integer that represents that courses vertex is. So this linkedlist holds
+ * all the <PREREQ_ID> 's that were listed for the i'th class. 
+ * 
+ * inDegreeCount -> This whole project is based on Khan's algorithm. So the indegreecount tells how many prerequisites
+ * need to be completed before a class can be taken. 
+ * 
+ * idToVertex -> This hashmap holds the <COURSE_ID> and it respective vertex.
+ * 
+ * DEFAULT_EDGE_WEIGHT -> if a class cannot be taken conccurently it gets this edge weight in both graphs
+ * 
+ * CONCURRENT_WEIGHT -> if a class can be taken concurrently it gets this edge weight in the prereqGraph
+ * 
+ * MINIMUM_DATA_LENGTH -> if the user follows the syntax listed above then the length of the data array should 
+ * be at least 3
+ * 
+ * ID_INDEX, NAME_INDEX, UNIT_INDEX, PREREQ_INDEX -> all these refer to an index in the data array
+ * at that index you can find the data that the variable describes
+ */
 public class Parser
 {
 	private Scanner inputFile;
@@ -20,12 +89,11 @@ public class Parser
 	
 	private HashMap<String,Integer> idToVertex;
 	
-	//If all information is present in a line then it should a least be of length 3
-	private final static int MINIMUM_DATA_LENGTH = 3;
-	
 	private final static int DEFAULT_EDGE_WEIGHT = 1;
 	
 	public final static int CONCURRENT_WEIGHT = 2;
+	
+	private final static int MINIMUM_DATA_LENGTH = 3;
 	
 	private final static int ID_INDEX = 0;
 	
@@ -51,14 +119,7 @@ public class Parser
 		buildGraph();
 	}
 
-	/**
-	 * The main goal of parse courses is to map class id to vertexes and to fill the course list with 
-	 * the required information. Each line in the input will follow this format:
-	 * <CLASSID>,<ClassName>,<UnitWorth>,[ListOfPrerequisitesForClass]
-	 * It will fill the unproccessedEdges list with the list of classes that require the vertex x as a prerequisite 
-	 * This and the hashmap will be used to build the graph
-	 * 
-	 */
+	
 	private void parseCourses()
 	{
 		while(inputFile.hasNextLine()) 
@@ -102,12 +163,7 @@ public class Parser
 		}
 	}
 	
-	/**
-	 * THe build graph function will take the unproccessed prereqs list and name to index hashmap
-	 * and use it to build the graph. At the end of this function the unproccessed prereqs will be empty.
-	 * 
-	 * 
-	 */
+
 	public void buildGraph() 
 	{
 		requiredByXGraph = new AdjList(courseList.size());
