@@ -4,9 +4,10 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * The scheduler class is meant to help a student plan the courses they want to take by maintaining 
- * a graph of the classes that have been taken and providing them with information regarding what classes 
- * they can take at the moment. 
+ * The scheduler class is an implementation of Khans Algorithm. It is done in a way that allows the user 
+ * to determine which vertex (a vertex is course) they want to visit. This is synonymous to a student planning 
+ * the courses they want to take during their time in college. With this tool the student does not need to 
+ * keep track of the fact if they took all the prerequisites for a class since the scheduler keeps track of that.
  * 
  * 
  * TODO: clean up the user interface
